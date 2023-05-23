@@ -32,63 +32,6 @@ namespace VMA_HPP_NAMESPACE {
 
 
 namespace VMA_HPP_NAMESPACE {
-  class Pool {
-  public:
-    using CType      = VmaPool;
-    using NativeType = VmaPool;
-  public:
-    VULKAN_HPP_CONSTEXPR         Pool() = default;
-    VULKAN_HPP_CONSTEXPR         Pool(std::nullptr_t) VULKAN_HPP_NOEXCEPT {}
-    VULKAN_HPP_TYPESAFE_EXPLICIT Pool(VmaPool pool) VULKAN_HPP_NOEXCEPT : m_pool(pool) {}
-
-#if defined(VULKAN_HPP_TYPESAFE_CONVERSION)
-    Pool& operator=(VmaPool pool) VULKAN_HPP_NOEXCEPT {
-      m_pool = pool;
-      return *this;
-    }
-#endif
-
-    Pool& operator=(std::nullptr_t) VULKAN_HPP_NOEXCEPT {
-      m_pool = {};
-      return *this;
-    }
-
-#if defined( VULKAN_HPP_HAS_SPACESHIP_OPERATOR )
-    auto operator<=>(Pool const &) const = default;
-#else
-    bool operator==(Pool const & rhs) const VULKAN_HPP_NOEXCEPT {
-      return m_pool == rhs.m_pool;
-    }
-#endif
-
-    VULKAN_HPP_TYPESAFE_EXPLICIT operator VmaPool() const VULKAN_HPP_NOEXCEPT {
-      return m_pool;
-    }
-
-    explicit operator bool() const VULKAN_HPP_NOEXCEPT {
-      return m_pool != VK_NULL_HANDLE;
-    }
-
-    bool operator!() const VULKAN_HPP_NOEXCEPT {
-      return m_pool == VK_NULL_HANDLE;
-    }
-
-  private:
-    VmaPool m_pool = {};
-  };
-  VULKAN_HPP_STATIC_ASSERT(sizeof(Pool) == sizeof(VmaPool),
-                           "handle and wrapper have different size!");
-}
-#ifndef VULKAN_HPP_NO_SMART_HANDLE
-namespace VULKAN_HPP_NAMESPACE {
-  template<> struct UniqueHandleTraits<VMA_HPP_NAMESPACE::Pool, VMA_HPP_NAMESPACE::Dispatcher> {
-    using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::Pool, VMA_HPP_NAMESPACE::Allocator>;
-  };
-}
-namespace VMA_HPP_NAMESPACE { using UniquePool = VULKAN_HPP_NAMESPACE::UniqueHandle<Pool, Dispatcher>; }
-#endif
-
-namespace VMA_HPP_NAMESPACE {
   class Allocation {
   public:
     using CType      = VmaAllocation;
@@ -138,7 +81,8 @@ namespace VMA_HPP_NAMESPACE {
 }
 #ifndef VULKAN_HPP_NO_SMART_HANDLE
 namespace VULKAN_HPP_NAMESPACE {
-  template<> struct UniqueHandleTraits<VMA_HPP_NAMESPACE::Allocation, VMA_HPP_NAMESPACE::Dispatcher> {
+  template<> class UniqueHandleTraits<VMA_HPP_NAMESPACE::Allocation, VMA_HPP_NAMESPACE::Dispatcher> {
+    public:
     using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::Allocation, VMA_HPP_NAMESPACE::Allocator>;
   };
 }
@@ -195,11 +139,70 @@ namespace VMA_HPP_NAMESPACE {
 }
 #ifndef VULKAN_HPP_NO_SMART_HANDLE
 namespace VULKAN_HPP_NAMESPACE {
-  template<> struct UniqueHandleTraits<VMA_HPP_NAMESPACE::DefragmentationContext, VMA_HPP_NAMESPACE::Dispatcher> {
+  template<> class UniqueHandleTraits<VMA_HPP_NAMESPACE::DefragmentationContext, VMA_HPP_NAMESPACE::Dispatcher> {
+    public:
     using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::DefragmentationContext, void>;
   };
 }
 namespace VMA_HPP_NAMESPACE { using UniqueDefragmentationContext = VULKAN_HPP_NAMESPACE::UniqueHandle<DefragmentationContext, Dispatcher>; }
+#endif
+
+namespace VMA_HPP_NAMESPACE {
+  class Pool {
+  public:
+    using CType      = VmaPool;
+    using NativeType = VmaPool;
+  public:
+    VULKAN_HPP_CONSTEXPR         Pool() = default;
+    VULKAN_HPP_CONSTEXPR         Pool(std::nullptr_t) VULKAN_HPP_NOEXCEPT {}
+    VULKAN_HPP_TYPESAFE_EXPLICIT Pool(VmaPool pool) VULKAN_HPP_NOEXCEPT : m_pool(pool) {}
+
+#if defined(VULKAN_HPP_TYPESAFE_CONVERSION)
+    Pool& operator=(VmaPool pool) VULKAN_HPP_NOEXCEPT {
+      m_pool = pool;
+      return *this;
+    }
+#endif
+
+    Pool& operator=(std::nullptr_t) VULKAN_HPP_NOEXCEPT {
+      m_pool = {};
+      return *this;
+    }
+
+#if defined( VULKAN_HPP_HAS_SPACESHIP_OPERATOR )
+    auto operator<=>(Pool const &) const = default;
+#else
+    bool operator==(Pool const & rhs) const VULKAN_HPP_NOEXCEPT {
+      return m_pool == rhs.m_pool;
+    }
+#endif
+
+    VULKAN_HPP_TYPESAFE_EXPLICIT operator VmaPool() const VULKAN_HPP_NOEXCEPT {
+      return m_pool;
+    }
+
+    explicit operator bool() const VULKAN_HPP_NOEXCEPT {
+      return m_pool != VK_NULL_HANDLE;
+    }
+
+    bool operator!() const VULKAN_HPP_NOEXCEPT {
+      return m_pool == VK_NULL_HANDLE;
+    }
+
+  private:
+    VmaPool m_pool = {};
+  };
+  VULKAN_HPP_STATIC_ASSERT(sizeof(Pool) == sizeof(VmaPool),
+                           "handle and wrapper have different size!");
+}
+#ifndef VULKAN_HPP_NO_SMART_HANDLE
+namespace VULKAN_HPP_NAMESPACE {
+  template<> class UniqueHandleTraits<VMA_HPP_NAMESPACE::Pool, VMA_HPP_NAMESPACE::Dispatcher> {
+    public:
+    using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::Pool, VMA_HPP_NAMESPACE::Allocator>;
+  };
+}
+namespace VMA_HPP_NAMESPACE { using UniquePool = VULKAN_HPP_NAMESPACE::UniqueHandle<Pool, Dispatcher>; }
 #endif
 
 namespace VMA_HPP_NAMESPACE {
@@ -711,7 +714,8 @@ namespace VMA_HPP_NAMESPACE {
 }
 #ifndef VULKAN_HPP_NO_SMART_HANDLE
 namespace VULKAN_HPP_NAMESPACE {
-  template<> struct UniqueHandleTraits<VMA_HPP_NAMESPACE::Allocator, VMA_HPP_NAMESPACE::Dispatcher> {
+  template<> class UniqueHandleTraits<VMA_HPP_NAMESPACE::Allocator, VMA_HPP_NAMESPACE::Dispatcher> {
+    public:
     using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::Allocator, void>;
   };
 }
@@ -768,7 +772,8 @@ namespace VMA_HPP_NAMESPACE {
 }
 #ifndef VULKAN_HPP_NO_SMART_HANDLE
 namespace VULKAN_HPP_NAMESPACE {
-  template<> struct UniqueHandleTraits<VMA_HPP_NAMESPACE::VirtualAllocation, VMA_HPP_NAMESPACE::Dispatcher> {
+  template<> class UniqueHandleTraits<VMA_HPP_NAMESPACE::VirtualAllocation, VMA_HPP_NAMESPACE::Dispatcher> {
+    public:
     using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::VirtualAllocation, VMA_HPP_NAMESPACE::VirtualBlock>;
   };
 }
@@ -899,7 +904,8 @@ namespace VMA_HPP_NAMESPACE {
 }
 #ifndef VULKAN_HPP_NO_SMART_HANDLE
 namespace VULKAN_HPP_NAMESPACE {
-  template<> struct UniqueHandleTraits<VMA_HPP_NAMESPACE::VirtualBlock, VMA_HPP_NAMESPACE::Dispatcher> {
+  template<> class UniqueHandleTraits<VMA_HPP_NAMESPACE::VirtualBlock, VMA_HPP_NAMESPACE::Dispatcher> {
+    public:
     using deleter = VMA_HPP_NAMESPACE::Deleter<VMA_HPP_NAMESPACE::VirtualBlock, void>;
   };
 }
